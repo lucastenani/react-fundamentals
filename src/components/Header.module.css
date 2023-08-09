@@ -1,4 +1,21 @@
-.header {
-  background-color: #202024;
-  height: 80px;
+header {
+  background-color: var(--gray-800);
+  padding: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.ignite {
+  color: var(--gray-100);
+  font-size: 25.585px;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+header img {
+  width: 3rem;
+  height: 3rem;
 }

@@ -1,36 +1,51 @@
+import { format, formatDistanceToNow } from "date-fns";
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import styles from "./Post.module.css";
+import { Target } from "@phosphor-icons/react";
 
-export function Post() {
+export function Post({ author, publishedAt, content }) {
+  const publishedDateFormated = format(publishedAt, "MMM d 'at' hh:mm aaa");
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    addSuffix: true,
+  });
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/diego3g.png" />
+          <Avatar src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Diego Fernandes</strong>
-            <span>CTO @Rocketseat</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time title="Mon 14 Aug 19:52" dateTime="2023-08-14 19:52:00">
-          Posted 2 hour ago
+        <time
+          title={publishedDateFormated}
+          dateTime={publishedAt.toISOString()}
+        >
+          Posted {publishedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋 </p>
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀{" "}
-        </p>
-        <p>
-          👉 <a href="#">jane.design/doctorcare</a>
-        </p>
-        <p>
-          <a href="#">#novoprojeto</a> <a href="#">#nlw</a>{" "}
-          <a href="#">#rocketsea</a>
-        </p>
+        {content.map((line) => {
+          if (line.type === "paragraph") {
+            return <p>{line.content}</p>;
+          } else if (line.type === "link") {
+            return (
+              <p>
+                <a
+                  href={line.href}
+                  target={line.href === "#" ? null : "_blank"}
+                  rel={line.href === "#" ? null : "noreferrer"}
+                >
+                  {line.content}
+                </a>
+              </p>
+            );
+          }
+        })}
       </div>
 
       <form className={styles.commentForm}>

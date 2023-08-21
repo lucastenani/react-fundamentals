@@ -5,7 +5,7 @@ import styles from "./Post.module.css";
 import { Target } from "@phosphor-icons/react";
 
 export function Post({ author, publishedAt, content }) {
-  const publishedDateFormated = format(publishedAt, "MMM d 'at' hh:mm aaa");
+  const publishedDateFormatted = format(publishedAt, "MMM d 'at' hh:mm aaa");
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     addSuffix: true,
   });
@@ -21,7 +21,7 @@ export function Post({ author, publishedAt, content }) {
           </div>
         </div>
         <time
-          title={publishedDateFormated}
+          title={publishedDateFormatted}
           dateTime={publishedAt.toISOString()}
         >
           Posted {publishedDateRelativeToNow}

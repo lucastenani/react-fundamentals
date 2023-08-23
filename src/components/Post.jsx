@@ -17,6 +17,8 @@ export function Post({ author, publishedAt, content }) {
     addSuffix: true,
   });
 
+  const isNewCommentEmpty = newCommentText.replace(/\s/g, "").length === 0;
+
   function handleCreateNewComment() {
     event.preventDefault();
     setComments([...comments, newCommentText]);
@@ -26,6 +28,12 @@ export function Post({ author, publishedAt, content }) {
   function handleNewCommentChange() {
     event.target.setCustomValidity("");
     setNewCommentText(event.target.value);
+  }
+
+  function handleNewCommentEnter() {
+    if (event.key === "Enter" && !event.shiftKey && !isNewCommentEmpty) {
+      handleCreateNewComment();
+    }
   }
 
   function handleNewCommentInvalid() {
@@ -39,8 +47,6 @@ export function Post({ author, publishedAt, content }) {
 
     setComments(commentsWithoutDeletedOne);
   }
-
-  const isNewCommentEmpty = newCommentText.length === 0;
 
   return (
     <article className={styles.post}>
@@ -88,6 +94,7 @@ export function Post({ author, publishedAt, content }) {
           value={newCommentText}
           onChange={handleNewCommentChange}
           onInvalid={handleNewCommentInvalid}
+          onKeyUp={handleNewCommentEnter}
           required
         />
         <footer>

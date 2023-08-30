@@ -1,10 +1,34 @@
-import { useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  InvalidEvent,
+  KeyboardEvent,
+  useState,
+} from "react";
 import { format, formatDistanceToNow } from "date-fns";
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import styles from "./Post.module.css";
 
-export function Post({ author, publishedAt, content }) {
+interface Author {
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
+
+interface Content {
+  type: "paragraph" | "link";
+  content: string;
+  href?: string;
+}
+
+interface PostProps {
+  author: Author;
+  publishedAt: Date;
+  content: Content[];
+}
+
+export function Post({ author, publishedAt, content }: PostProps) {
   const [comments, setComments] = useState([
     "Very cool post, huh?! 🫣 🤗 🫡 🤔 🫢",
   ]);
@@ -19,28 +43,28 @@ export function Post({ author, publishedAt, content }) {
 
   const isNewCommentEmpty = newCommentText.replace(/\s/g, "").length === 0;
 
-  function handleCreateNewComment() {
+  function handleCreateNewComment(event: FormEvent) {
     event.preventDefault();
     setComments([...comments, newCommentText]);
     setNewCommentText("");
   }
 
-  function handleNewCommentChange() {
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("");
     setNewCommentText(event.target.value);
   }
 
-  function handleNewCommentEnter() {
+  function handleNewCommentEnter(event: KeyboardEvent) {
     if (event.key === "Enter" && !event.shiftKey && !isNewCommentEmpty) {
-      handleCreateNewComment();
+      handleCreateNewComment(event);
     }
   }
 
-  function handleNewCommentInvalid() {
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("Please provide your comment or feedback");
   }
 
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     const commentsWithoutDeletedOne = comments.filter((comment) => {
       return comment !== commentToDelete;
     });
@@ -75,8 +99,8 @@ export function Post({ author, publishedAt, content }) {
               <p key={line.content}>
                 <a
                   href={line.href}
-                  target={line.href === "#" ? null : "_blank"}
-                  rel={line.href === "#" ? null : "noreferrer"}
+                  target={line.href === "#" ? undefined : "_blank"}
+                  rel={line.href === "#" ? undefined : "noreferrer"}
                 >
                   {line.content}
                 </a>

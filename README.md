@@ -6,7 +6,7 @@ The "Ignite Feed" project is a fictitious social media application that allows u
 
 ## Project URL
 
-You can see the project in action [here](https://lucastenani.github.io/react-fundamentals/).
+You can see the project in action [here](https://lucastenani.github.io/react-fundamentals/). Please note that the Figma design used in this project is the property of RocketSeat. Refer to RocketSeat's terms and conditions for usage rights of the design.
 
 ## Design
 
@@ -36,8 +36,6 @@ The project follows the following structure:
 Some installations will be necessary before run the application locally.
 
 :warning: [Node.js](https://nodejs.org/en/download/)
-
-:warning: [Yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
 
 ## Getting Started
 
@@ -81,5 +79,3 @@ npm install
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-Please note that the Figma design used in this project is the property of RocketSeat. Refer to RocketSeat's terms and conditions for usage rights of the design.
